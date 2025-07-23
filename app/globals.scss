@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+:root {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #25394C;
+    --foreground: #CBBDC9;
+  }
+}
+
+/* Base fallback (used before classes are applied) */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* Light mode class */
+.light {
+  // we're going slightly lighter than the OG lilac
+  --background: #e5e1e4;
+  // we use a white-on-white here, as we're using mix-blend-mode to invert the foreground color
+  --foreground: #ffffff;
+  
+  h1, p {
+    color: #25394C;
+  }
+
+  .button-lotus {
+    // we apply this, to match the inverse (mix-blend-mode) bg colour on hover
+    &:hover {
+      background-color: #c3b4a7;
+      color: #000000;
+    }
+  }
+}
+
+/* Dark mode class */
+.dark {
+  --background: #25394C;
+  --foreground: #CBBDC9;
+
+    // we only apply this to the dark mode lotus button
+  .button-lotus {
+    &:before {
+      filter: invert(0);
+    }
+  }
+}
+
+html, body {
+  height: 100%;
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  overscroll-behavior: none;
+}
+
+@font-face {
+  font-family: 'Inclusive Sans';
+  src: url('/fonts/InclusiveSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.body-font {
+  font-family: 'Inclusive Sans', monospace;
+}
+
+// .text-outline {
+//   text-shadow:
+//     -0.5px -0.5px 0 #000,
+//      0.5px -0.5px 0 #000,
+//     -0.5px  0.5px 0 #000,
+//      0.5px  0.5px 0 #000;
+// }
+
+/*  overriding default tailwind styles here, which defaults to width 100% on mobile */
+@media (width <= 40rem) {
+  .container {
+    max-width: 94vw;
+  }
+}
+
+.container-large {
+  max-width: 94vw;
+}
+
+.bg-navy {
+  background: var(--background);
+}
+
+.text-lilacstone {
+  color: var(--foreground);
+}
+
+.text-monospace {
+  font-family: '__nextjs-Geist Mono';
+}
+
+@mixin transition {
+  transition: all 0.3s ease;
+}
+
+.button-lotus {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  // border-bottom: solid 1px transparent;
+  background-color: transparent;
+  padding: 3px 15px 3px 12px;
+  border-radius: 50px;
+  &:before {
+    content: '';
+    background-image: url('/lotus-stone.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    height: 0px;
+    width: 22px;
+    // bottom: 4px;
+    opacity: 0;
+    display: block;
+    @include transition;
+    filter: invert(1)
+  }
+  &:hover {
+    // border-bottom: solid 1px var(--foreground);
+    background-color: var(--foreground);
+    color: black;
+    &:before {
+      opacity: 1;
+      // height: 20px is the right height for text-xs
+      height: 20px;
+    }
+  }
+}
+
+.button-pill {
+  display: flex;
+  gap: 5px;
+  color: var(--background); 
+  background-color: var(--foreground);
+  border-radius: 25px;
+  padding: 5px 18px;
+  width: fit-content;
+  @include transition;
+  &:hover {
+    color: var(--foreground); 
+    background-color: var(--background);
+  }
+  &.navy {
+    color: var(--foreground); 
+    background-color: #25394C;
+    &:hover {
+      color: #25394C; 
+      background-color: var(--foreground);
+    }
+  }
+}
+
+.capsule {
+  height: fit-content;
+  background: #171717;
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-family: '__nextjs-Geist Mono';
+}
+
+.project-wrap {
+  .project-image {
+    @include transition;
+  }
+  .project-text {
+    border-bottom: solid 1px transparent;
+    @include transition;
+  }
+  &:hover {
+    .project-image {
+      filter: brightness(0.5);
+      @include transition;
+    }
+    .project-text {
+      border-bottom: solid 1px #25394C;
+      @include transition;
+    }
+  }
+}
+
+.nextjs-toast {
+  display: none !important;
+}
