@@ -64,8 +64,8 @@ export default async function Page() {
     <div className="m-auto relative py-12 ">
       <LightModeSetter />
       <FadeInOnScroll className="mt-12">
-        <h1 className="text-5xl md:text-7xl body-font">{folioIntro.data.Content}</h1>
-        <p className="text-xs md:text-sm mt-4 ml-1">{folioIntro.data.IntroText}</p>
+        <h1 className="text-5xl md:text-7xl body-font">{folioIntro?.data?.Content ?? ""}</h1>
+        <p className="text-xs md:text-sm mt-4 ml-1">{folioIntro?.data?.IntroText ?? ""}</p>
         <a download href="/" className="text-xs button-pill navy mt-4 flex items-center">Download CV</a>
         {/* <Image src="arrow-down.svg" alt="arrow down" width={20} height={36} className="ml-1 mt-5"/> */}
       </FadeInOnScroll>
