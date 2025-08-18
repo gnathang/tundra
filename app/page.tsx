@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: seo.metaTitle || "Default site title",
     description: seo.metaDescription || "Default description for your site",
-    keywords: seo.keywords ? seo.keywords.split(",").map(k => k.trim()) : undefined,
+    keywords: seo.keywords ? seo.keywords.split(",").map((k: string) => k.trim()) : undefined,
     robots: seo.metaRobots || "index, follow",
     // canonical: seo.canonical || "https://your-site-url.com",
     viewport: "width=device-width, initial-scale=1",

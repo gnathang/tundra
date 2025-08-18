@@ -1,15 +1,16 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+// also gonna import HTMLAttributes and ReactNode for better type definitions
+import { useEffect, useRef, HTMLAttributes, ReactNode } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode
   delay?: number;
-};
+} & HTMLAttributes<HTMLDivElement>; // extend all normal div props
 
 export default function FadeInOnScroll({ children, delay = 0 }: Props) {
   const el = useRef<HTMLDivElement>(null);

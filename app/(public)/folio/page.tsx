@@ -1,18 +1,48 @@
-
 import { getFolioIntro, getFolioWorks } from "@/lib/api"
 import LightModeSetter from "@/components/themeSetter";
 import Image from "next/image"
 import FadeInOnScroll from "@/components/FadeInOnScroll";
 
+// types
+type Project = {
+  id: string | number;
+  Title: string;
+  Description: string;
+  URL?: string;
+  Thumbnail: {
+    formats: {
+      large: {
+        url: string;
+      };
+    };
+  };
+  Logo?: {
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+  };
+  Agency?: boolean;
+  TechName?: { Name: string }[];
+};
 
+type FolioWorksResponse = {
+  data: Project[];
+};
+
+type FolioIntroResponse = {
+  data: {
+    Content: string;
+    IntroText: string;
+  };
+};
 
 export default async function Page() {
-  
-  const folio = await getFolioWorks();
-  const folioIntro = await getFolioIntro();
+  const folio: FolioWorksResponse = await getFolioWorks();
+  const folioIntro: FolioIntroResponse = await getFolioIntro();
 
   // Define responsive grid patterns
-  const getGridClass = (index) => {
+  const getGridClass = (index: number): string => {
     const patterns = [
       'md:col-span-5 md:row-span-3',
       'md:col-span-3 md:row-span-3', 
@@ -44,7 +74,7 @@ export default async function Page() {
           <a 
             key={project.id} 
             className={`${getGridClass(index)} project-wrap cursor-pointer block h-full overflow-hidden`}
-            href={project.URL ? project.URL : ''}
+            href={project.URL || ''}
           >
             <FadeInOnScroll className="h-full flex flex-col relative">
               <Image
@@ -59,9 +89,18 @@ export default async function Page() {
                 <Image
                   src={process.env.STRAPI_BASE_URL + project.Logo.url}
                   alt={project.Logo.alternativeText || project.Title}
-                  width={project.Logo.width}
-                  height={project.Logo.height}
+                  width={project.Logo.width || 100}
+                  height={project.Logo.height || 50}
                   className="absolute top-2 left-2 w-30 object-contain"
+                />
+              )}
+              {project.Agency && (
+                <Image
+                  src="/dd-logo-white.svg"
+                  alt="Agency Logo"
+                  width={100}
+                  height={50}
+                  className="absolute top-2 right-2 object-contain"
                 />
               )}
               <div className="flex justify-between gap-2 items-start mt-2">
@@ -70,7 +109,7 @@ export default async function Page() {
                   <p className="text-xs text-monospace">{project.Description}</p>
                 </div>
                 <div className="flex gap-1 items-end mt-1">
-                  {project.TechName?.map((item: { Name: string }, idx: number) => (
+                  {project.TechName?.map((item, idx) => (
                     <h6 key={idx} className="text-xs capsule">{item.Name}</h6>
                   ))}
                 </div>
