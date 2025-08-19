@@ -15,8 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
   console.log("SEO Data:", seo);
 
   return {
-    title: seo.metaTitle || "Default site title",
-    description: seo.metaDescription || "Default description for your site",
+    title: seo.metaTitle || "Tundra | Freelance Web Development in Bristol, Cardiff and the South West",
+    description: seo.metaDescription || "Web Development and Design in Bristol, Cardiff and the South West. For small businesses, startups and agencies.",
     keywords: seo.keywords ? seo.keywords.split(",").map((k: string) => k.trim()) : undefined,
     robots: seo.metaRobots || "index, follow",
     // canonical: seo.canonical || "https://your-site-url.com",
@@ -33,22 +33,34 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const heroText = await getHeroText();  
-  
-  return <>
-    <Header />
-    <DarkModeSetter />
-    <main className="py-24">
-      <div className="container-large m-auto mt-12">
-        <FadeInOnScroll>
-          {/* <p className="text-xs mb-4 body-font uppercase">{ heroText.data.Title }</p> */}
-          <h1 className="text-5xl md:text-7xl body-font">{heroText.data.Content}</h1>
-          { heroText.data.IntroText ? <p className="text-xs md:text-sm mt-5 max-w-xs"> {heroText.data.IntroText }</p> : ''}
-          <Link href={heroText.data.link_url} className="text-xs button-pill mt-8 flex items-center">{heroText.data.link_text}</Link>
-        </FadeInOnScroll>
-      </div>
-    </main>
-    <Footer />
-  </>
+  const heroText = await getHeroText();
+
+  // Fail-safe: if heroText or heroText.data is missing, use empty defaults
+  const content = heroText?.data?.Content ?? "";
+  const introText = heroText?.data?.IntroText ?? "";
+  const linkUrl = heroText?.data?.link_url ?? "#";
+  const linkText = heroText?.data?.link_text ?? "";
+
+  return (
+    <>
+      <Header />
+      <DarkModeSetter />
+      <main className="py-24">
+        <div className="container-large m-auto mt-12">
+          <FadeInOnScroll>
+            <h1 className="text-5xl md:text-7xl body-font">{content}</h1>
+            {introText && <p className="text-xs md:text-sm mt-5 max-w-xs">{introText}</p>}
+            {linkText && (
+              <Link href={linkUrl} className="text-xs button-pill mt-8 flex items-center">
+                {linkText}
+              </Link>
+            )}
+          </FadeInOnScroll>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
 }
+
 

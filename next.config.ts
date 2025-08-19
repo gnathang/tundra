@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
         hostname: "localhost",
         port: "1337",
         pathname: "/**"
+      },
+        {
+        protocol: "https",
+        hostname: "salty-refuge-88688-5d2aa6bd1957.herokuapp.com",
+        pathname: "/**"
       }
     ]
   },

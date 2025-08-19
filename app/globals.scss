@@ -101,7 +101,7 @@ html, body {
 }
 
 .text-monospace {
-  font-family: '__nextjs-Geist Mono';
+  font-family: '__nextjs-Geist Mono', monospace;
 }
 
 @mixin transition {
@@ -172,7 +172,7 @@ html, body {
   padding: 3px 10px;
   border-radius: 50px;
   font-size: 12px;
-  font-family: '__nextjs-Geist Mono';
+  font-family: '__nextjs-Geist Mono', monospace;
 }
 
 .project-wrap {

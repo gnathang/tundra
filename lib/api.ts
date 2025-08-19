@@ -1,9 +1,16 @@
+// checking the environment variables
+console.log('🔍 Environment Variables:');
+console.log('STRAPI_API_URL:', process.env.NEXT_PUBLIC_STRAPI_API_URL);
+console.log('STRAPI_API_TOKEN:', process.env.STRAPI_API_TOKEN);
+console.log('STRAPI_BASE_URL:', process.env.NEXT_PUBLIC_STRAPI_BASE_URL);
+
+
 // define the URL
-const API_URL = process.env.STRAPI_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
 // header variables
 const HEADERS = {
-  Authorization: "bearer " + process.env.STRAPI_API_TOKEN,
+  Authorization: "bearer " + process.env.NEXT_PUBLIC_STRAPI_API_TOKEN,
   "Content-Type": "application/json",
 }
 

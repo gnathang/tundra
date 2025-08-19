@@ -69,54 +69,73 @@ export default async function Page() {
         <a download href="/" className="text-xs button-pill navy mt-4 flex items-center">Download CV</a>
         {/* <Image src="arrow-down.svg" alt="arrow down" width={20} height={36} className="ml-1 mt-5"/> */}
       </FadeInOnScroll>
+
       <div className="grid md:grid-cols-8 gap-9 md:gap-12 mt-20">
-        {folio.data.map((project, index) => (
-          <a 
-            key={project.id} 
-            className={`${getGridClass(index)} project-wrap cursor-pointer block h-full overflow-hidden`}
-            href={project.URL || ''}
-          >
-            <FadeInOnScroll className="h-full flex flex-col relative">
-              <Image
-                src={process.env.STRAPI_BASE_URL + project.Thumbnail.formats.large.url}
-                alt={project.Title}
-                width={1000}
-                height={1000}
-                style={{ width: '100%', height: '100%'}}
-                className="project-image object-cover max-h-[80%]"
-              />
-              {project.Logo?.url && (
-                <Image
-                  src={process.env.STRAPI_BASE_URL + project.Logo.url}
-                  alt={project.Logo.alternativeText || project.Title}
-                  width={project.Logo.width || 100}
-                  height={project.Logo.height || 50}
-                  className="absolute top-2 left-2 w-30 object-contain"
-                />
-              )}
-              {project.Agency && (
-                <Image
-                  src="/dd-logo-white.svg"
-                  alt="Agency Logo"
-                  width={100}
-                  height={50}
-                  className="absolute top-2 right-2 object-contain"
-                />
-              )}
-              <div className="flex justify-between gap-2 items-start mt-2">
-                <div className="project-text pb-3">
-                  <p className="text-lg">{project.Title}</p>
-                  <p className="text-xs text-monospace">{project.Description}</p>
+        {folio?.data?.map((project, index) => {
+          console.log(process.env.IMAGE_URL)
+          console.log(process.env.NEXT_PUBLIC_STRAPI_API_URL)
+
+          const thumbnailUrl = project?.Thumbnail?.formats?.large?.url
+            ? process.env.NEXT_PUBLIC_STRAPI_BASE_URL + project.Thumbnail.formats.large.url
+            : "/placeholder.png"; // fallback image
+
+          const logoUrl = project?.Logo?.url
+            ? process.env.NEXT_PUBLIC_STRAPI_BASE_URL + project.Logo.url
+            : null;
+
+          return (
+            <a
+              key={project.id}
+              className={`${getGridClass(index)} project-wrap cursor-pointer block h-full overflow-hidden`}
+              href={project.URL || "#"}
+            >
+              <FadeInOnScroll className="h-full flex flex-col relative">
+                {thumbnailUrl && (
+                  <Image
+                    src={thumbnailUrl}
+                    alt={project.Title || "Project Image"}
+                    width={1000}
+                    height={1000}
+                    style={{ width: "100%", height: "100%" }}
+                    className="project-image object-cover max-h-[80%]"
+                  />
+                )}
+
+                {logoUrl && (
+                  <Image
+                    src={logoUrl}
+                    alt={project.Logo?.alternativeText || project.Title}
+                    width={project.Logo?.width || 100}
+                    height={project.Logo?.height || 50}
+                    className="absolute top-2 left-2 w-30 object-contain"
+                  />
+                )}
+
+                {project.Agency && (
+                  <Image
+                    src="/dd-logo-white.svg"
+                    alt="Agency Logo"
+                    width={100}
+                    height={50}
+                    className="absolute top-2 right-2 object-contain"
+                  />
+                )}
+
+                <div className="flex justify-between gap-2 items-start mt-2">
+                  <div className="project-text pb-3">
+                    <p className="text-lg">{project.Title ?? ""}</p>
+                    <p className="text-xs text-monospace mt-2">{project.Description ?? ""}</p>
+                  </div>
+                  <div className="flex gap-1 items-end mt-1">
+                    {project.TechName?.map((item, idx) => (
+                      <h6 key={idx} className="text-xs capsule">{item?.Name}</h6>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex gap-1 items-end mt-1">
-                  {project.TechName?.map((item, idx) => (
-                    <h6 key={idx} className="text-xs capsule">{item.Name}</h6>
-                  ))}
-                </div>
-              </div>      
-            </FadeInOnScroll>
-          </a>
-        ))}
+              </FadeInOnScroll>
+            </a>
+          );
+        })}
       </div>
     </div>
   );
