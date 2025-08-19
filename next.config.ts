@@ -1,6 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // add this to see detailed errors during build
+  experimental: {
+    // serverComponentsExternalPackages: [],
+  },
+  serverExternalPackages: [], // if you need it
+  // Or try this
+  output: 'standalone',
   // disable dev indicators
   devIndicators: false,
   // add image support for local Strapi
@@ -10,6 +17,11 @@ const nextConfig: NextConfig = {
         protocol: "http",
         hostname: "localhost",
         port: "1337",
+        pathname: "/**"
+      },
+      {
+        protocol: "https",
+        hostname: "salty-refuge-88688-5d2aa6bd1957.herokuapp.com",
         pathname: "/**"
       }
     ]

@@ -1,37 +1,48 @@
-// define the URL
-const API_URL = process.env.STRAPI_API_URL;
+// checking the environment variables
+console.log('🔍 Environment Variables:');
+console.log('NEXT_PUBLIC_STRAPI_API_URL:', process.env.NEXT_PUBLIC_STRAPI_API_URL);
+console.log('STRAPI_API_TOKEN:', process.env.STRAPI_API_TOKEN);
+console.log('NEXT_PUBLIC_STRAPI_BASE_URL:', process.env.NEXT_PUBLIC_STRAPI_BASE_URL);
 
-// header variables
+// define the URL
+const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+
+// header variables - Try without auth first to test
 const HEADERS = {
   Authorization: "bearer " + process.env.STRAPI_API_TOKEN,
   "Content-Type": "application/json",
 }
 
+// helper function to handle API calls with error handling
+async function apiCall(endpoint: string) {
+  try {
+    const res = await fetch(API_URL + endpoint, {
+      headers: HEADERS
+    });
+    
+    if (!res.ok) {
+      console.warn(`API call failed for ${endpoint}: ${res.status}`);
+      return null;
+    }
+    
+    const json = await res.json();
+    return json;
+  } catch (error) {
+    console.warn(`API call error for ${endpoint}:`, error instanceof Error ? error.message : String(error));
+    return null;
+  }
+}
+
 // grab our hero text
-// we are using the SEO component from the hero. we will import it into our <head>
 export async function getHeroText() { 
-  const res = await fetch(API_URL + "/hero?populate=SEO", {
-    headers: HEADERS
-  });
-  const json = await res.json();
-  return json;
+  return await apiCall("/hero?populate=SEO");
 }
 
 // grab our folio intro text
 export async function getFolioIntro() { 
-  const res = await fetch(API_URL + "/folio-intro", {
-    headers: HEADERS
-  });
-  const json = await res.json();
-  return json;
+  return await apiCall("/folio-intro");
 }
 
 export async function getFolioWorks() {
-  // note we need to use the PLURAL API name here, because we are getting repeated data
-  // we can sort by ID also
-  const res = await fetch(API_URL + "/Folios?sort=Ranking:asc&populate=TechName&populate=Thumbnail&populate=Logo", {
-    headers: HEADERS
-  })
-  const json = await res.json();
-  return json;
+  return await apiCall("/Folios?sort=Ranking:asc&populate=TechName&populate=Thumbnail&populate=Logo");
 }
