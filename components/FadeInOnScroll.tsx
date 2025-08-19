@@ -30,10 +30,12 @@ export default function FadeInOnScroll({ children, className, delay = 0 }: Props
           ease: 'power2.out',
           scrollTrigger: {
             trigger: el.current,
-            start: 'top 95%',   // triggers when element enters
-            toggleActions: 'play none none none',
-            once: true,         // only fire once
-          },
+            start: 'top bottom',  // element’s top hits bottom of viewport
+            // start: 'top+=100 bottom', // top of el +100 hits bottom of viewport
+            // end: 'bottom bottom', // keep it valid until bottom aligns with bottom
+            // toggleActions: 'play none none none', // don't really need this
+            once: true,
+          }
         }
       );
     }, el);
@@ -43,7 +45,6 @@ export default function FadeInOnScroll({ children, className, delay = 0 }: Props
 
   return (
     <div
-      id="testing"
       ref={el}
       className={className}
       style={{ opacity: 0, transform: 'translateY(30px)' }}
