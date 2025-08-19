@@ -118,7 +118,7 @@ export default async function Page() {
                     alt={project.Logo?.alternativeText || project.Title}
                     width={project.Logo?.width || 100}
                     height={project.Logo?.height || 50}
-                    className="absolute top-2 left-2 w-30 object-contain"
+                    className="absolute top-2 left-2 w-30 object-contain max-h-[8rem] md:max-h-none"
                   />
                 )}
 
