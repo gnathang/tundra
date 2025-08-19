@@ -114,7 +114,7 @@ html, body {
   gap: 5px;
   // border-bottom: solid 1px transparent;
   background-color: transparent;
-  padding: 3px 15px 3px 12px;
+  padding: 5px 15px 3px 12px;
   border-radius: 50px;
   &:before {
     content: '';
@@ -125,6 +125,7 @@ html, body {
     position: relative;
     height: 0px;
     width: 22px;
+    top: -2px;
     // bottom: 4px;
     opacity: 0;
     display: block;
