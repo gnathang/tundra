@@ -1,7 +1,7 @@
-import { getFolioIntro, getFolioWorks } from "@/lib/api"
 import LightModeSetter from "@/components/themeSetter";
 import Image from "next/image"
 import FadeInOnScroll from "@/components/FadeInOnScroll";
+import { getFolioIntro, getFolioWorks } from "@/lib/api";
 
 // types
 type Project = {
