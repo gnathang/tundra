@@ -40,7 +40,7 @@ export async function getHeroText() {
 
 // grab our folio intro text
 export async function getFolioIntro() { 
-  return await apiCall("/folio-intro");
+  return await apiCall("/folio-intro?populate=DownloadCVPath");
 }
 
 export async function getFolioWorks() {
