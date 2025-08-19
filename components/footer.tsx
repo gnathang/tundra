@@ -10,14 +10,14 @@ export default function Footer() {
     const isDarkMode = html.classList.contains("dark");
 
     if (isDarkMode) {
-      setNaytechLogo("/naytech-logo.svg");
-    } else {
       setNaytechLogo("/naytech-logo-white.svg");
+    } else {
+      setNaytechLogo("/naytech-logo-white-inverse.svg");
     }
   }, []);
 
   return <footer className="fixed w-full bottom-0 py-3">
-    <div className="container-large m-auto body-font flex gap-10">
+    <div className="container-large m-auto body-font flex items-center gap-10">
       {/* <Link href="mailto:gabrielnathan@hotmail.co.uk" className="button-lotus">Contact Gabriel</Link> */}
       <span className="text-xs">&copy; Tundra {new Date().getFullYear()}</span>
       <span className="text-xs flex items-center gap-1">Partner of &nbsp;
