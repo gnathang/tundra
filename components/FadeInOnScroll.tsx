@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, HTMLAttributes, ReactNode } from 'react';
+import { useEffect, useRef, HTMLAttributes, ReactNode } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
@@ -13,31 +13,40 @@ type Props = {
 } & HTMLAttributes<HTMLDivElement>;
 
 export default function FadeInOnScroll({ children, className, delay = 0 }: Props) {
+  const el = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    // batch all .fade-in elements together
-    ScrollTrigger.batch('.fade-in', {
-      interval: 0.1, // time window for batching (0.1s)
-      batchMax: 3,   // max elements animated together
-      start: 'top 95%',
-      once: true,    // only run once
-      onEnter: batch => {
-        gsap.to(batch, {
+    if (!el.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        el.current,
+        { autoAlpha: 0, y: 30 },
+        {
           autoAlpha: 1,
           y: 0,
           duration: 0.8,
-          ease: 'power2.out',
-          stagger: 0.15,
           delay,
-        });
-      },
-    });
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el.current,
+            start: 'top 95%',   // triggers when element enters
+            toggleActions: 'play none none none',
+            once: true,         // only fire once
+          },
+        }
+      );
+    }, el);
 
-    // recalc when layout shifts
-    ScrollTrigger.refresh();
+    return () => ctx.revert();
   }, [delay]);
 
   return (
-    <div className={`fade-in ${className || ''}`} style={{ opacity: 0, transform: 'translateY(30px)' }}>
+    <div
+      ref={el}
+      className={className}
+      style={{ opacity: 0, transform: 'translateY(30px)' }}
+    >
       {children}
     </div>
   );
