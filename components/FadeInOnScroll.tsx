@@ -27,6 +27,8 @@ export default function FadeInOnScroll({ children, delay = 0 }: Props) {
         duration: 1,
         delay,
         ease: 'power2.out',
+        overwrite: 'auto', // ensures previous tweens don’t block
+        force3D: true, // improves rendering
         scrollTrigger: {
           trigger: el.current,
           start: 'top 90%',
