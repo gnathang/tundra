@@ -150,8 +150,11 @@ body {
 @media (max-width: 640px) {
   .button-lotus {
     padding: 5px 10px 3px 8px;
-    &:before {
-      width: 18px;
+      &:hover {
+      &:before {
+        // height: 20px is the right height for text-xs
+        height: 16px;
+      }
     }
   }
 }

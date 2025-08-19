@@ -21,7 +21,7 @@ export default function Footer() {
       {/* <Link href="mailto:gabrielnathan@hotmail.co.uk" className="button-lotus">Contact Gabriel</Link> */}
       <span className="text-xs">&copy; Tundra {new Date().getFullYear()}</span>
       <span className="text-xs flex items-center gap-1">Partner of &nbsp;
-        <Image src={ naytechLogo } alt="Naytech" width={100} height={32} />
+        <Image src={ naytechLogo } alt="Naytech" width={100} height={32} className="h-[1rem] md:h-[2rem]"/>
       </span>
     </div>
   </footer>
