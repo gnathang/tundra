@@ -49,7 +49,7 @@ export default async function Home() {
         <div className="container-large m-auto mt-12">
           <FadeInOnScroll>
             <h1 className="text-5xl md:text-7xl body-font">{content}</h1>
-            {introText && <p className="text-xs md:text-sm mt-5 max-w-xs">{introText}</p>}
+            {introText && <p className="text-sm mt-5 max-w-xs">{introText}</p>}
             {linkText && (
               <Link href={linkUrl} className="text-xs button-pill mt-8 flex items-center">
                 {linkText}
