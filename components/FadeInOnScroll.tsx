@@ -1,6 +1,5 @@
 'use client';
 
-// also gonna import HTMLAttributes and ReactNode for better type definitions
 import { useEffect, useRef, HTMLAttributes, ReactNode } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -8,9 +7,9 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 type Props = {
-  children: ReactNode
+  children: ReactNode;
   delay?: number;
-} & HTMLAttributes<HTMLDivElement>; // extend all normal div props
+} & HTMLAttributes<HTMLDivElement>;
 
 export default function FadeInOnScroll({ children, delay = 0 }: Props) {
   const el = useRef<HTMLDivElement>(null);
@@ -18,24 +17,32 @@ export default function FadeInOnScroll({ children, delay = 0 }: Props) {
   useEffect(() => {
     if (!el.current) return;
 
-    gsap.fromTo(
-      el.current,
-      { autoAlpha: 0, y: 20 },
-      {
-        autoAlpha: 1,
-        y: 0,
-        duration: 1,
-        delay,
-        ease: 'power2.out',
-        overwrite: 'auto', // ensures previous tweens don’t block
-        force3D: true, // improves rendering
-        scrollTrigger: {
-          trigger: el.current,
-          start: 'top 90%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        el.current,
+        { autoAlpha: 0, y: 30 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.8,
+          delay,
+          ease: 'power2.out',
+          overwrite: 'auto',
+          force3D: true,
+          scrollTrigger: {
+            trigger: el.current,
+            start: 'top 95%',   // fire earlier (when element is just entering)
+            end: 'bottom 85%',  // keeps it safe for last element
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+    }, el);
+
+    // force ScrollTrigger to recalc after layout shift
+    ScrollTrigger.refresh();
+
+    return () => ctx.revert();
   }, [delay]);
 
   return (
