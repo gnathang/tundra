@@ -43,6 +43,7 @@ export default function FadeInOnScroll({ children, className, delay = 0 }: Props
 
   return (
     <div
+      id="testing"
       ref={el}
       className={className}
       style={{ opacity: 0, transform: 'translateY(30px)' }}
