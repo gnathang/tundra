@@ -100,7 +100,7 @@ export default async function Page() {
               className={`${getGridClass(index)} project-wrap cursor-pointer block h-full overflow-hidden`}
               href={project.URL || "#"}
             >
-              <FadeInOnScroll className="h-full flex flex-col relative">
+              <div className="h-full flex flex-col relative">
                 {thumbnailUrl && (
                   <Image
                     src={thumbnailUrl}
@@ -143,7 +143,7 @@ export default async function Page() {
                     ))}
                   </div>
                 </div>
-              </FadeInOnScroll>
+              </div>
             </a>
           );
         })}
